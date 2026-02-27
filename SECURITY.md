@@ -1,54 +1,46 @@
-# Security Policy
+# security
 
-KidBlocksOS is designed for children. Security is not optional — it's foundational.
+this is a children's product. security is not optional.
 
-## Reporting Vulnerabilities
+## reporting vulnerabilities
 
-If you discover a security vulnerability, **please do not open a public issue.**
+do not open a public issue. email **w2927864@gmail.com** with:
 
-Email: **w2927864@gmail.com**
+- what you found
+- steps to reproduce
+- potential impact (especially around child safety)
+- suggested fix if you have one
 
-Include:
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact (especially regarding child safety)
-- Suggested fix (if you have one)
+we'll respond within 48 hours and work with you on a fix before any public disclosure.
 
-We will respond within 48 hours and work with you on a fix before any public disclosure.
+## what counts
 
-## Scope
+**in scope:**
+- content safety bypass (making the skill generate inappropriate content)
+- sandbox escape (generated HTML accessing the parent frame or OS)
+- credential exposure (API keys, PINs, or tokens leaking)
+- parental control bypass (getting around PIN, screen time, bedtime, or safety levels)
 
-### In Scope
+**out of scope:**
+- vulnerabilities in upstream dependencies (Electron, Node.js, Pi OS) should go to those projects
+- physical access attacks (root on the Pi means game over regardless)
+- social engineering the parent into sharing their PIN
 
-- **Content safety bypass** — any way to make the skill generate inappropriate content for children
-- **Sandbox escape** — any way generated HTML could access the parent frame or OS
-- **Credential exposure** — API keys, PINs, or tokens accessible where they shouldn't be
-- **Parental control bypass** — circumventing PIN, screen time, bedtime, or safety levels
+## the security model
 
-### Out of Scope
+full details in [docs/architecture.md](docs/architecture.md).
 
-- Vulnerabilities in upstream dependencies (Electron, Node.js, Raspberry Pi OS) — report to those projects
-- Physical access attacks (if someone has root on the Pi, all bets are off)
-- Social engineering the parent into giving the child the PIN
+the short version:
 
-## Security Model
+1. three layers of content safety (client filter, skill rules, iframe sandbox)
+2. dedicated system user with minimal permissions
+3. systemd hardening (ProtectSystem, NoNewPrivileges, read-only filesystem)
+4. generated content runs in `iframe sandbox="allow-scripts"` only. no allow-same-origin.
+5. parent PIN hashed with scrypt. gateway tokens randomized per device.
+6. everything runs on localhost. no external network exposure.
 
-See [docs/architecture.md — Security Architecture](docs/architecture.md#security-architecture) for the full threat model and mitigations.
+## supported versions
 
-### Key Principles
-
-1. **Defense in depth** — three layers of content safety (client filter → skill rules → iframe sandbox)
-2. **Least privilege** — dedicated user, systemd hardening, minimal permissions
-3. **No trust in generated content** — iframe sandbox with `allow-scripts` only, no `allow-same-origin`
-4. **Secrets are hashed** — parent PIN uses scrypt, gateway tokens are random
-5. **Local-first** — gateway bound to localhost, no external network exposure
-
-## Supported Versions
-
-| Version | Supported |
+| version | supported |
 |---------|-----------|
-| 0.1.x (beta) | ✅ |
-
-## Acknowledgments
-
-We appreciate responsible disclosure and will credit security researchers (with permission) in our release notes.
+| 0.1.x (beta) | yes |

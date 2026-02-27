@@ -1,30 +1,24 @@
-# Using the Imagination Engine Skill
+# using the imagination engine skill
 
-> How to use the kidblocks-engine skill with OpenClaw or any LLM.
+the kidblocks-engine skill teaches an AI to generate complete, self-contained HTML5 apps from natural language. it's built for kids ages 5 to 10 on a touchscreen, but the output works in any browser.
 
-## What the Skill Does
+## quick start
 
-The kidblocks-engine skill is a detailed instruction set that teaches an AI to generate complete, self-contained HTML5 apps from natural language. It's designed for children ages 5-10 using a touchscreen, but the generated apps work in any browser.
-
-## Quick Start
-
-### Option 1: OpenClaw
+### option 1: OpenClaw
 
 ```bash
-# Install the skill
 mkdir -p ~/.openclaw/workspace/skills/kidblocks-engine
 cp skill/kidblocks-engine/SKILL.md ~/.openclaw/workspace/skills/kidblocks-engine/
 
-# Use it
-# Tell your agent: "Read the kidblocks-engine skill and make a cat maze game for age 7"
+# then tell your agent:
+# "read the kidblocks-engine skill and make a cat maze game for age 7"
 ```
 
-### Option 2: Any LLM API
+### option 2: any LLM API
 
 ```python
-import anthropic
+import anthropic, json
 
-# Read the skill
 with open("skill/kidblocks-engine/SKILL.md") as f:
     skill = f.read()
 
@@ -34,53 +28,56 @@ response = client.messages.create(
     system=skill,
     messages=[{
         "role": "user",
-        "content": '{"description": "cat maze game", "studio": "games", "age": 7, "safety": "standard"}'
+        "content": json.dumps({
+            "description": "cat maze game",
+            "studio": "games",
+            "age": 7,
+            "safety": "standard"
+        })
     }],
     max_tokens=8000
 )
 
-# Parse the JSON response
-import json
 result = json.loads(response.content[0].text)
-# result["html"] — complete HTML app
-# result["logic"] — visual programming data
+# result["html"] is the complete app
+# result["logic"] is the visual programming data
 ```
 
-### Option 3: Paste into ChatGPT/Claude
+### option 3: paste it
 
-1. Copy the contents of `SKILL.md`
-2. Paste as the system prompt (or first message)
-3. Ask: "Make a piano app for a 6 year old"
-4. Copy the JSON output
-5. Save the `html` field as an `.html` file and open in a browser
+1. copy the contents of `SKILL.md`
+2. paste as the system prompt or first message in any chat UI
+3. ask: "make a piano app for a 6 year old"
+4. copy the html from the JSON output
+5. save as .html, open in a browser
 
-## Input Format
+## input format
 
-The skill expects a JSON object as the user message:
+send a JSON object as the user message:
 
 ```json
 {
   "description": "what the child asked for",
-  "studio": "games|stories|music|art|science|tinker",
+  "studio": "games",
   "age": 7,
-  "safety": "strict|standard|relaxed"
+  "safety": "standard"
 }
 ```
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `description` | Yes | Natural language description of what to build |
-| `studio` | No | Which studio context (defaults to games) |
-| `age` | No | Child's age, 5-10 (defaults to 7) |
-| `safety` | No | Content safety level (defaults to standard) |
+| field | required | notes |
+|-------|----------|-------|
+| description | yes | natural language, what to build |
+| studio | no | games, stories, music, art, science, or tinker. defaults to games |
+| age | no | 5 through 10. defaults to 7 |
+| safety | no | strict, standard, or relaxed. defaults to standard |
 
-## Output Format
+## output format
 
-The skill instructs the AI to return a JSON object:
+the skill tells the AI to return JSON only. no markdown, no explanation.
 
 ```json
 {
-  "html": "<!DOCTYPE html><html>...complete self-contained app...</html>",
+  "html": "<!DOCTYPE html><html>...full app...</html>",
   "logic": {
     "things": [
       {
@@ -99,98 +96,70 @@ The skill instructs the AI to return a JSON object:
 }
 ```
 
-### The `html` Field
+**html**: complete self-contained page. all CSS and JS inline. no external dependencies. no images. visuals use emoji, Canvas, or CSS. sound uses Web Audio API.
 
-A complete, self-contained HTML page. All CSS and JS are inline. No external dependencies. No images — all visuals use emoji, Canvas API, or CSS. Sound uses Web Audio API.
+**logic**: visual representation of app behavior for the KidBlocks programming layer. if you don't need it, ignore it.
 
-### The `logic` Field
+## studios
 
-A visual programming representation of the app's behavior:
-- **things**: Objects/characters with adjustable properties (sliders, toggles, colors)
-- **rules**: When/then pairs in kid-friendly language
+### games (Game Forge)
+platformer, catcher, maze, whack-a-mole, pong, runner, memory, target practice
 
-KidBlocksOS displays this in a drawer panel so kids can see "how it works." If you're not using KidBlocksOS, you can ignore this field or use it for educational display.
+### stories (Story Weaver)
+branching narrative, mad libs, comic strip, adventure
 
-## Studios
+### music (Beat Lab)
+piano, beat maker, sequencer, sound board, theremin, music box
 
-The skill defines 6 studios, each with specific patterns:
+### art (Canvas Magic)
+freehand drawing, stamps, color mixer, pixel art, kaleidoscope, fireworks, pattern maker
 
-### Games (Game Forge)
-Patterns: platformer, catcher, maze, whack-a-mole, pong, runner, memory, target practice
+### science (Lab Explorer)
+solar system, ecosystem, weather sim, body explorer, chemistry mixer, dinosaur timeline, gravity sim
 
-### Stories (Story Weaver)
-Patterns: branching narrative, mad libs, comic strip, adventure
+### tinker (Gadget Shop)
+calculator, clock/timer, flashcards, fortune teller, dice roller, color palette, animations
 
-### Music (Beat Lab)
-Patterns: piano, beat maker, sequencer, sound board, theremin, music box
+## content safety
 
-### Art (Canvas Magic)
-Patterns: freehand drawing, stamp tool, color mixer, pixel art, kaleidoscope, fireworks, pattern maker
+the skill has explicit rules about what never gets generated:
 
-### Science (Lab Explorer)
-Patterns: solar system, ecosystem, weather sim, body explorer, chemistry mixer, dinosaur timeline, gravity sim
+- violence, weapons, death
+- sexual content
+- drugs, alcohol
+- bullying, hate speech
+- horror, jump scares
+- gambling mechanics
 
-### Tinker (Gadget Shop)
-Patterns: calculator, clock/timer, flashcards, fortune teller, dice roller, color palette, simple animations
+instead of refusing, the AI reinterprets. "gun game" becomes "water balloon launcher". "kill enemies" becomes "help friends". this keeps the creative flow going while keeping the output safe.
 
-## Content Safety
+## performance notes
 
-The skill includes explicit safety rules:
+the skill targets constrained hardware:
 
-**Never generates:**
-- Violence, weapons, death
-- Sexual content
-- Drugs, alcohol
-- Bullying, hate speech
-- Horror, jump scares
-- Gambling mechanics
+- keep DOM elements under 200 for games
+- use requestAnimationFrame, not setInterval
+- canvas games should clear and redraw each frame
+- throttle touch events to 16ms minimum
+- use CSS transform and opacity for animations (GPU accelerated)
+- target 30fps
 
-**Safe reinterpretation:**
-| Child says | AI generates |
-|-----------|-------------|
-| "kill enemies" | "help friends" |
-| "gun game" | "water balloon launcher" |
-| "scary monster" | "friendly monster who needs help" |
-| "war game" | "pillow fort battle" |
-| "fight" | "dance-off" |
+these constraints mean the generated apps are lightweight and run well everywhere, not just on Pi hardware.
 
-## Performance Notes
+## testing changes
 
-The skill targets Raspberry Pi 5 hardware:
-- DOM elements < 200 for games
-- `requestAnimationFrame` (not `setInterval`)
-- Canvas clear-and-redraw pattern
-- Touch event throttling (16ms minimum)
-- CSS transforms/opacity only (GPU accelerated)
-- Target 30fps
+if you modify the skill:
 
-These constraints produce lightweight apps that run well everywhere.
-
-## Testing
-
-To test changes to the skill:
-
-1. Edit `SKILL.md`
-2. Use the skill as a system prompt
-3. Test with a variety of prompts:
+1. use it as a system prompt with any model
+2. test across all six studios:
    - "make a penguin platformer" (games)
    - "tell me a story about a brave fox" (stories)
    - "I want a drum machine" (music)
    - "drawing app with rainbow brush" (art)
    - "show me the solar system" (science)
    - "build a calculator" (tinker)
-4. Verify output is valid JSON
-5. Open the HTML in a browser at 1024x600
-6. Test touch interactions (use Chrome DevTools device mode)
-7. Verify no external resource requests (Network tab should be empty)
-
-## Contributing
-
-See the main [README](../README.md) for contribution guidelines.
-
-Key areas:
-- Add new patterns to existing studios
-- Improve safety reinterpretation rules
-- Better age adaptation
-- Performance optimization hints
-- Localization support
+3. check that output is valid JSON
+4. open the HTML at 1024x600 in a browser
+5. test touch (Chrome DevTools device mode)
+6. check Network tab for external requests (there should be none)
+7. try edge cases that should be caught by safety rules

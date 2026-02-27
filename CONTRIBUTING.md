@@ -1,69 +1,49 @@
-# Contributing to KidBlocksOS
+# contributing
 
-Thank you for your interest in making KidBlocksOS better for kids everywhere.
+this project is for children. everything here should reflect that.
 
-## What You Can Contribute To
+## what you can work on
 
-This repo contains the **Imagination Engine skill** and **documentation**. Contributions to both are welcome.
+### the imagination engine skill
 
-### Imagination Engine Skill
+`skill/kidblocks-engine/SKILL.md` is the instruction set that teaches AI to generate kid-safe interactive apps. we need:
 
-The skill at `skill/kidblocks-engine/SKILL.md` is the instruction set that teaches AI models to generate kid-safe interactive apps.
+- new game patterns (puzzle types, educational games, more instruments)
+- new science simulations (circuits, optics, biology)
+- better safety reinterpretation rules
+- age adaptation improvements
+- localization (translate safety rules and prompts to other languages)
+- performance hints for constrained hardware
 
-**We especially need:**
-- New game patterns (puzzle types, educational games)
-- New instrument patterns (guitar, drums, synthesizer)
-- New science simulations (circuits, optics, biology)
-- Better safety reinterpretation rules
-- Age-adaptive difficulty improvements
-- Localization (translate safety rules and prompts to other languages)
-- Performance optimization hints for constrained hardware
+### documentation
 
-### Documentation
+- fix errors, clarify confusing parts
+- add examples
+- improve the architecture docs
 
-- Fix errors or clarify confusing sections
-- Add examples
-- Improve the architecture documentation
-- Add FAQ content
+## how to test
 
-## How to Test Changes
+before submitting anything, test your changes:
 
-Before submitting a PR, test your skill changes:
+1. copy the modified SKILL.md
+2. use it as a system prompt with any model
+3. test diverse prompts across all six studios
+4. make sure output is valid JSON with html and logic fields
+5. open the HTML in a browser at 1024x600
+6. try touch interactions (Chrome DevTools device mode)
+7. check that there are no external network requests
+8. try edge cases that should be caught by safety rules
 
-1. Copy the modified `SKILL.md`
-2. Use it as a system prompt with any LLM (Claude, GPT-4, etc.)
-3. Test with diverse prompts across all 6 studios
-4. Verify the output is valid JSON with `html` and `logic` fields
-5. Open the generated HTML in a browser at **1024×600** resolution
-6. Test touch interactions (Chrome DevTools → device mode)
-7. Verify **no external network requests** (check Network tab)
-8. Verify content safety (try edge cases that should be reinterpreted)
+## submitting
 
-## Submitting Changes
+1. fork the repo
+2. make a branch
+3. make your changes
+4. test (see above)
+5. open a PR with a clear explanation of what you changed and why
 
-1. Fork the repository
-2. Create a branch (`git checkout -b improve-game-patterns`)
-3. Make your changes
-4. Test thoroughly (see above)
-5. Commit with a clear message
-6. Open a Pull Request
+one concern per PR. don't mix pattern additions with safety rule changes. if your change touches content safety, explain the implications.
 
-### PR Guidelines
+## questions
 
-- **One concern per PR** — don't mix pattern additions with safety rule changes
-- **Explain the "why"** — not just what you changed, but why it's better
-- **Include test prompts** — show us what you tested and the results
-- **Safety first** — if your change affects content safety, explain the implications
-
-## Code of Conduct
-
-This project is for children. All contributions and interactions must reflect that:
-
-- Be kind and constructive
-- Prioritize child safety above all else
-- No content that would be inappropriate for the target audience (ages 5-10)
-- Respect the work of others
-
-## Questions?
-
-Open a [Discussion](https://github.com/sleepycompile/kidblocksos/discussions) — we're happy to help.
+open a [discussion](https://github.com/sleepycompile/kidblocksos/discussions).
