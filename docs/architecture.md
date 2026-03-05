@@ -58,6 +58,9 @@ power on
   -> kidblocks-gateway.service starts
     -> OpenClaw gateway comes online at localhost:8089
     -> agent loads with kidblocks-engine skill in workspace
+  -> kidblocks-watcher.service starts (if marketplace enabled)
+    -> XMTP client connects with device wallet
+    -> polls for new marketplace listings
   -> kidblocks-kiosk.service starts
     -> cage compositor grabs tty7
     -> electron launches in kiosk mode
@@ -68,7 +71,7 @@ power on
 
 when the kid taps the lock screen and no profile exists yet, the wizard runs. two phases:
 
-**parent zone (8 steps):**
+**parent zone (10 steps):**
 1. "hand this to a grown-up"
 2. language (10 options)
 3. timezone
@@ -77,14 +80,20 @@ when the kid taps the lock screen and no profile exists yet, the wizard runs. tw
 6. content safety level
 7. parent pin (4 digit, confirmed, hashed)
 8. AI provider API key (configures the OpenClaw agent's provider)
+9. device wallet (generates a fresh Ethereum wallet on device)
+10. marketplace connection (registers on XMTP, joins the marketplace)
 
 **kid zone (4 steps):**
-9. "now hand this to your kid!"
-10. what's your name?
-11. how old are you? (5 through 10)
-12. pick your buddy (emoji avatar)
+11. "now hand this to your kid!"
+12. what's your name?
+13. how old are you? (5 through 10)
+14. pick your buddy (emoji avatar)
 
 the API key step writes to the OpenClaw config and starts the gateway. the parent never has to know what OpenClaw is. they just paste a key and it works.
+
+the wallet step generates a self-custody Ethereum wallet. the private key stays on the device. no seed phrases, no cloud backup. the parent sees a confirmation screen.
+
+the marketplace step runs as a child process using the system Node.js runtime (Electron's bundled Node has ABI mismatches with the XMTP native bindings). it registers on the XMTP production network, sends a DM to the marketplace master wallet, waits for acceptance, and receives the app catalog. the parent sees a progress bar.
 
 ## the creation pipeline
 
@@ -146,8 +155,21 @@ what happens when a kid says "make a penguin game where I slide on ice":
 ├── engine.json      # gateway token, configured flag
 ├── tts.json         # ElevenLabs key, voice choice
 ├── wifi.json        # ssid, password
+├── .wallet-key      # device Ethereum private key (never leaves device)
 └── usage-YYYY-MM-DD.json  # daily screen time tracking
 ```
+
+### XMTP and marketplace
+
+```
+/opt/kidblocks/data/xmtp/
+└── device-wallet.db        # local XMTP client database (encrypted)
+
+/opt/kidblocks/data/marketplace/
+└── listings.json           # cached app catalog from marketplace
+```
+
+all XMTP operations run as child processes spawned with the system Node.js runtime (`/usr/bin/node`). Electron's bundled Node.js has ABI mismatches with the XMTP native SDK bindings, so marketplace scripts execute outside the Electron process and communicate results back through stdout/stderr.
 
 ### OpenClaw config
 

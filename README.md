@@ -28,7 +28,7 @@ a kid opens a studio, says what they want to build ("a penguin game where I jump
 
 no app store. no ads. no tracking. no internet required for the core experience.
 
-a Raspberry Pi is the brain. [OpenClaw](https://openclaw.ai) is the agent framework that runs natively on the device, handling all AI generation through its local gateway. the OS ships with OpenClaw installed and a dedicated agent configured out of the box.
+a Raspberry Pi is the brain. [OpenClaw](https://openclaw.ai) is the agent framework that runs natively on the device, handling all AI generation through its local gateway. [XMTP](https://xmtp.org) is the messaging layer powering the peer-to-peer marketplace. payments settle in USDC on [Base](https://base.org). the OS ships with OpenClaw installed and a dedicated agent configured out of the box.
 
 ## what's in this repo
 
@@ -244,7 +244,8 @@ proof of concept. actively being built.
 - [x] six creative studios with 40+ patterns
 - [x] 13 offline templates
 - [x] OpenClaw agent with dedicated skill
-- [x] first boot setup wizard (10 languages)
+- [x] first boot setup wizard (14 steps, 10 languages)
+- [x] Lumen voice guide (ElevenLabs TTS through every wizard step)
 - [x] screen time, bedtime, break reminders
 - [x] content safety (three layers)
 - [x] parent pin (hashed)
@@ -256,6 +257,9 @@ proof of concept. actively being built.
 - [x] USDC payments on Base (kids see "coins")
 - [x] device wallet (self-custody, created during setup)
 - [x] parental spend limits and listing price caps
+- [x] marketplace watcher daemon (auto-accepts new devices)
+- [x] encrypted catalog delivery via XMTP DMs
+- [x] WiFi and volume widgets in setup wizard
 - [ ] guardian channel via XMTP (parent notifications)
 - [ ] OTA updates
 - [ ] accessibility
@@ -269,19 +273,21 @@ kids build apps. kids sell apps. the marketplace is a peer-to-peer app store whe
 
 ### how it works
 
-the entire marketplace runs on one XMTP group. every KidBlocksOS device joins the group during setup. listings, purchases, invoices, and app deliveries are JSON messages in the group. there are no servers, no APIs, no databases. the XMTP group is the marketplace.
+a parent walks through setup. the device generates a wallet, registers on XMTP (an encrypted messaging network), and sends a DM to the marketplace master wallet. a watcher daemon running on a Raspberry Pi picks up the request, adds the device to the marketplace group, and replies with the full app catalog over the encrypted DM.
 
-payments are direct USDC transfers on Base. no smart contracts. when a kid buys an app, their device sends USDC to the seller's device wallet. the seller verifies the transaction on chain and delivers the HTML5 app file over XMTP.
+why a DM and not the group? XMTP is end-to-end encrypted. new members cannot read messages sent before they joined. the watcher packages the current catalog and delivers it directly.
+
+there are no servers, no APIs, no databases, no accounts. just wallets talking to wallets over encrypted channels. the XMTP group is the marketplace.
 
 ### what kids see vs what is happening
 
-kids see gold coins in a piggy bank. they price apps in coins. they buy and sell in coins. under the hood, 100 coins equals 1 USDC. the conversion happens in the UI. all on-chain values are real USDC on Base.
+kids see apps with coin prices in a shop. they browse by studio (games, art, music, stories, science). under the hood, 100 coins equals 1 USDC. the conversion happens in the UI. all on-chain values are real USDC on Base.
 
 kids never see wallet addresses, transaction hashes, gas fees, or dollar amounts. parents configure real USDC spend limits in the settings screen.
 
 ### device onboarding
 
-during setup, the OS generates a wallet on the device. the private key never leaves the device. the device sends a DM to the marketplace master wallet. a watcher daemon adds the device to the XMTP group automatically. no accounts, no sign-up, no email. one DM and the device is a marketplace member.
+during setup, the OS generates a wallet on the device. the private key never leaves the device. the device registers on XMTP, sends an encrypted DM to the marketplace master wallet, and receives the catalog back in seconds. no accounts, no sign-up, no email. one encrypted DM and the device has a full marketplace.
 
 ### purchase flow
 

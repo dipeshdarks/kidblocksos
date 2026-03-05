@@ -31,25 +31,51 @@ The marketplace is a single XMTP group. Every KidBlocksOS device joins this grou
 
 1. During the setup wizard, the OS generates a fresh Ethereum wallet on the device
 2. The private key is stored locally and never leaves the device
-3. The device sends a DM to the marketplace master wallet requesting group membership
-4. A watcher daemon running on the master wallet receives the DM and adds the device to the XMTP marketplace group
-5. The device syncs existing messages from the group and begins listening for new ones
+3. The device registers on the XMTP production network using the wallet as its identity
+4. The device sends an encrypted DM to the marketplace master wallet requesting group membership
+5. A watcher daemon running on the master wallet receives the DM and adds the device to the XMTP marketplace group
+6. The watcher replies to the DM with the full app catalog (because XMTP is end-to-end encrypted, new group members cannot read messages sent before they joined)
+7. The device receives the catalog from the DM reply and caches it locally
 
 ```
-Device                    Master Wallet
+Device                    Master Wallet (Watcher)
+  │                            │
+  │  register on XMTP         │
   │                            │
   │  DM: join_marketplace      │
   │───────────────────────────►│
-  │                            │  addMembers(device)
+  │                            │  addMembersByIdentifiers(device)
+  │                            │  build catalog from group history
   │  DM: join_accepted         │
+  │    + full listing catalog  │
   │◄───────────────────────────│
   │                            │
+  │  cache listings locally    │
   │  (now a group member)      │
-  │  sync existing messages    │
-  │  start real-time stream    │
 ```
 
-No accounts. No sign-up forms. No emails. A single DM and the device is in.
+No accounts. No sign-up forms. No emails. A single encrypted DM and the device is in.
+
+### Why the catalog comes via DM
+
+XMTP groups are end-to-end encrypted. When a new member joins, they cannot decrypt messages that were sent before their membership. This means a freshly joined device would see an empty marketplace even though listings exist in the group history.
+
+The watcher solves this by reading the current catalog from the group, packaging it into the DM reply, and delivering it directly to the new device. The device gets the full catalog instantly without any group message reprocessing.
+
+## The Watcher
+
+The watcher is a daemon that runs on the marketplace maintainer's device (a Raspberry Pi). It uses the master wallet to manage the XMTP marketplace group.
+
+```
+/home/oryx/kidblocks-build/os/services/marketplace-watcher.mjs
+```
+
+It does two things:
+
+1. **Polls for new DM conversations every 10 seconds.** `streamAllMessages` does not reliably detect new DM conversations in the XMTP SDK, so the watcher uses `conversations.sync()` on a polling loop.
+2. **Processes join requests.** When a new device DMs the master wallet, the watcher adds the device to the group and replies with the current catalog.
+
+The watcher runs as a systemd service (`kidblocks-watcher.service`) with auto-restart on failure. It tracks processed requests in memory to avoid duplicate additions.
 
 ## Message Protocol
 

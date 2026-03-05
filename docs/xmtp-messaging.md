@@ -34,6 +34,22 @@ XMTP is the sole communication layer for the KidBlocksOS marketplace. It handles
 
 All devices are members of one XMTP group. This group is the marketplace. Every listing, purchase, and delivery flows through it.
 
+## SDK Version
+
+KidBlocksOS uses `@xmtp/node-sdk` v5.4.0 with `@xmtp/node-bindings` v1.9.1 on the production XMTP network.
+
+Important API notes for v5.4.0:
+- `Client.create(signer, options)` takes two arguments (not three). `dbEncryptionKey` goes inside the options object.
+- Use `encodeText()` from `@xmtp/node-bindings` to encode message content before sending.
+- Use `addMembersByIdentifiers()` instead of `addMembers()` (the latter has a known bug with hex address handling).
+- Use `createDm()` and `createGroup()` (not `newConversation` or `newGroup`).
+
+## Child Process Architecture
+
+All XMTP operations on KidBlocksOS devices run as child processes spawned with `/usr/bin/node` (Node.js 22). Electron 33 bundles Node.js 20, which has ABI mismatches with the native XMTP bindings compiled for Node 22. Running XMTP inside Electron crashes with native module errors.
+
+The workaround: marketplace scripts (`marketplace-setup.mjs`, `marketplace-sync.mjs`) are executed as child processes using the system Node runtime. The Electron main process spawns them, reads their stdout for progress updates, and relays status to the renderer.
+
 ## Device Identity
 
 Each KidBlocksOS device has one Ethereum wallet. This wallet serves as:
@@ -42,7 +58,7 @@ Each KidBlocksOS device has one Ethereum wallet. This wallet serves as:
 2. **Payment wallet** - holds USDC on Base
 3. **Marketplace identity** - seller/buyer address in listings and transactions
 
-The XMTP client is initialized with a signer derived from the device wallet. The encryption key for the local XMTP database is deterministically derived from the wallet key. This means the same wallet always produces the same XMTP client state.
+The XMTP client is initialized with a signer derived from the device wallet. The encryption key for the local XMTP database is deterministically derived from the wallet key (`sha256(privateKey + '-kidblocks-marketplace')`). This means the same wallet always produces the same XMTP client state.
 
 ## Group Management
 
